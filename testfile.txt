@@ -1,0 +1,47 @@
+test1 = 
+{
+   # Zeroth test comment
+  test2= 
+{ 
+    123 456 789 } # First test comment 
+  test3 = "A test" # Second test comment
+  test4 = testing # Third # test comment 
+  test5 = { "One" "Two" "Three four five" } 
+} # Fourth test comment 
+
+test6 = {
+   321 321 123
+}
+testObjList = {
+  rgo = {
+    employment = {
+      province_id=1
+      employees = {
+
+        {
+          province_pop_id = {
+          province_id=1
+          index=0
+          type=9
+          }
+          count=1750
+        }
+
+        {
+          province_pop_id = {
+          province_id=1
+          index=1
+          type=9
+          }
+          count=84
+        }
+      }
+    }
+    last_income=76.29395
+    goods_type="timber"
+  }
+}
+
+testline = "blah" 
+"testString"=hmpf 
+

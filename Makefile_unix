@@ -1,0 +1,38 @@
+OutPutOpt     = -o 
+
+CXX           = g++
+CXXFLAGS      = -Wall -fPIC
+LD            = g++
+LDFLAGS       = -O -pthread #-pg 
+SOFLAGS       = -shared
+endif
+
+CXXFLAGS     += -g #-pg 
+LIBS          = 
+GL_LIBS       = 
+
+OBJECTS       = Parser.o Object.o DateParser.o Tester.o 
+
+#------------------------------------------------------------------------------
+# Clean suffixes so I can overwrite default cc -> o rule. 
+.SUFFIXES: 
+.PHONY: clean 
+all:	parser
+
+# Make object files depend on corresponding .cc and .hh files. 
+%.o:	%.cc %.hh
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+parser:		$(OBJECTS)
+		ar rcs libParser.a $(OBJECTS) 
+
+tester:		$(OBJECTS)
+		$(LD) $(CXXFLAGS) $(GL_LIBS) $(LDFLAGS) $^ $(LIBS) $(OutPutOpt) $@
+		@echo "$@ done"
+
+clean:
+		rm -f *.o libParser.a 
+
+###
+
+
