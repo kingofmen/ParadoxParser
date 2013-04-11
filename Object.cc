@@ -405,6 +405,14 @@ Object* Object::safeGetObject(std::string k, Object* def) {
   return vec[0]; 
 }
 
+Object* Object::getNeededObject (std::string k) {
+  Object* ret = safeGetObject(k);
+  if (ret) return ret;
+  ret = new Object(k);
+  setValue(ret);
+  return ret; 
+}
+
 
 std::string Object::toString () const {
   std::ostringstream blah;

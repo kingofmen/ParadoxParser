@@ -52,6 +52,7 @@ public:
   std::string safeGetString (std::string k, std::string def = ""); 
   int safeGetInt (std::string k, int def = 0);
   Object* safeGetObject (std::string k, Object* def = 0);
+  Object* getNeededObject (std::string k); // Returns the object with key 'k', creating and adding it if necessary. 
   std::string toString () const; 
   void setComment (std::string c) {comment = c;} 
   bool isNumeric () const; 
