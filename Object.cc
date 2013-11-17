@@ -58,6 +58,16 @@ void Object::unsetValue (std::string val) {
   }
 }
 
+void Object::unsetKeyValue (std::string key, std::string val) {
+  for (unsigned int i = 0; i < objects.size(); ++i) {
+    if (objects[i]->getKey() != key) continue;
+    if (objects[i]->getLeaf() != val) continue; 
+    objects[i] = objects.back(); 
+    objects.pop_back();
+    --i; 
+  }
+}
+
 void Object::setLeaf (std::string key, std::string val) {
   Object* leaf = new Object(key); 
   leaf->setValue(val); 
@@ -106,12 +116,24 @@ void Object::resetLeaf (std::string key, double val) {
   else setLeaf(key, val); 
 }
 
+void Object::remToken (std::string val) {
+  strVal = "";
+  std::vector<std::string> oldtokens = tokens;
+  tokens.clear(); 
+  for (unsigned int i = 0; i < oldtokens.size(); ++i) {
+    if (oldtokens[i] == val) continue;
+    addToList(oldtokens[i]); 
+  }
+}
+
 void Object::resetToken (unsigned int idx, std::string val) {
   strVal = "";
   std::vector<std::string> oldtokens = tokens;
   tokens.clear(); 
   for (unsigned int i = 0; i < oldtokens.size(); ++i) {
-    if (idx == i) addToList(val);
+    if (idx == i) {
+      if (val != "") addToList(val);
+    }
     else addToList(oldtokens[i]); 
   }
 }

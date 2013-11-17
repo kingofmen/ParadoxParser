@@ -35,13 +35,15 @@ public:
   void resetLeaf (std::string k, int value);
   void resetLeaf (std::string k, double value);
   void unsetValue (std::string val);
+  void unsetKeyValue (std::string key, std::string value); 
   void keyCount ();
   void keyCount (std::map<std::string, int>& counter);
   void setObjList (bool l = true) {isObjList = l;}
   std::string getToken (int index);
   int tokenAsInt (int index);
-  double tokenAsFloat (int index); 
-  void resetToken (unsigned int idx, std::string val); 
+  double tokenAsFloat (int index);
+  void remToken (std::string val); 
+  void resetToken (unsigned int idx, std::string val);
   int numTokens () const; 
   void addToList (std::string val);
   void addToList (double val);
