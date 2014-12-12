@@ -80,7 +80,7 @@ void readFile (std::ifstream& read) {
       // Apparently some files have a dangling close-brace?
       // Anyway, this indicates some sort of error. Try to
       // continue anyway by discarding the current object.
-      (*Parser::outstream) << "Discarding object due to additional close-braces.\n"; 
+      (*Parser::outstream) << "Discarding object \n" << currObject << "\n" << buffer << "\ndue to additional close-braces.\n"; 
       currObject = "";
       continue; 
     }

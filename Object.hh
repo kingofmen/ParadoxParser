@@ -53,11 +53,12 @@ public:
   double safeGetFloat (std::string k, double def = 0);
   std::string safeGetString (std::string k, std::string def = ""); 
   int safeGetInt (std::string k, int def = 0);
+  unsigned int safeGetUint (std::string k, unsigned int def = 0); 
   Object* safeGetObject (std::string k, Object* def = 0);
   Object* getNeededObject (std::string k); // Returns the object with key 'k', creating and adding it if necessary. 
   std::string toString () const; 
   void setComment (std::string c) {comment = c;} 
-  bool isNumeric () const; 
+  bool isNumeric () const;
   
 private:
   std::vector<Object*> objects;
@@ -82,6 +83,5 @@ typedef std::map<std::string, std::string> ststmap;
 typedef std::map<Object*, Object*> obobmap;
 extern Object* processFile (const char* filename, bool includes = false);
 extern Object* processFile (std::string filename, bool includes = false);
-
 
 #endif

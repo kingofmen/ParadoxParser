@@ -421,6 +421,14 @@ int Object::safeGetInt(std::string k, int def) {
   return atoi(vec[0]->getLeaf().c_str());
 }
 
+unsigned int Object::safeGetUint(std::string k, unsigned int def) {
+  objvec vec = getValue(k);
+  if (0 == vec.size()) return def;
+  int ret = atoi(vec[0]->getLeaf().c_str());
+  assert(0 <= ret);
+  return (unsigned int) ret;
+}
+
 Object* Object::safeGetObject(std::string k, Object* def) {
   objvec vec = getValue(k); 
   if (0 == vec.size()) return def; 
