@@ -30,9 +30,11 @@ public:
   void removeObject (Object* target); 
   void setLeaf (std::string k, std::string value);
   void setLeaf (std::string k, int value);
+  void setLeaf (std::string k, unsigned int value);
   void setLeaf (std::string k, double value);
   void resetLeaf (std::string k, std::string value);
   void resetLeaf (std::string k, int value);
+  void resetLeaf (std::string k, unsigned int value);
   void resetLeaf (std::string k, double value);
   void unsetValue (std::string val);
   void unsetKeyValue (std::string key, std::string value); 

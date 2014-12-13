@@ -82,6 +82,10 @@ void Object::setLeaf (std::string key, int val) {
   setValue(leaf); 
 }
 
+void Object::setLeaf (std::string key, unsigned int val) {
+  setLeaf(key, (int) val);
+}
+
 void Object::setLeaf (std::string key, double val) {
   Object* leaf = new Object(key);
   static char strbuffer[1000];
@@ -104,6 +108,10 @@ void Object::resetLeaf (std::string key, int val) {
     curr->setValue(strbuffer); 
   }
   else setLeaf(key, val); 
+}
+
+void Object::resetLeaf (std::string key, unsigned int val) {
+  resetLeaf(key, (int) val);
 }
 
 void Object::resetLeaf (std::string key, double val) {
