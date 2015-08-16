@@ -17,7 +17,7 @@ testObjList = {
     employment = {
       province_id=1
       employees = {
-
+{ }
         {
           province_pop_id = {
           province_id=1
@@ -40,6 +40,13 @@ testObjList = {
     last_income=76.29395
     goods_type="timber"
   }
+}
+
+testMixedObjList = {
+  last_income=76.29395
+  {
+  }
+  goods_type="timber"
 }
 
 testline = "blah" 
