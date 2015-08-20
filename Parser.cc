@@ -8,6 +8,7 @@ std::vector<std::string> taglist;
 std::ostream* Parser::outstream = &std::cout;
 const std::string Parser::UnkeyedObjectMarker = "u_n_k_e_y_e_d_o_b_j_e_c_t";
 bool Parser::abortOnBadObject = false;
+std::string Parser::ignoreString("");
 
 void setOutputStream (std::ostream* newos) {Parser::outstream = newos;}
 
@@ -75,6 +76,7 @@ void readFile (std::ifstream& read) {
     std::getline(read, buffer);
     count++;
     int currBraces = trim(buffer);
+    if ((Parser::ignoreString != "") && (Parser::ignoreString == buffer)) continue;
     openBraces += currBraces;
 
     if (openBraces < 0) {
