@@ -9,6 +9,8 @@ test1 =
   test5 = { "One" "Two" "Three four five" } 
 } # Fourth test comment 
 
+hashtag_in_string = "This string contains a #, parse at your own risk" # And an extra comment!
+
 test6 = {
    321 321 123
 }

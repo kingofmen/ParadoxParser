@@ -52,7 +52,11 @@ int trim (std::string& str) {
   }
 
   unsigned int fcomment = 0;
+  isInLiteral = false;
   for (; fcomment < strSize; ++fcomment) {
+    if ('"' == s[fcomment]) isInLiteral = !isInLiteral;
+    if (isInLiteral) continue;
+
     if (s[fcomment] != '#') continue;
     break;
   }
