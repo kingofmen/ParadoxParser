@@ -30,6 +30,7 @@ struct Parser : public boost::spirit::grammar<Parser> {
   static const std::string UnkeyedObjectMarker;
   static bool abortOnBadObject;
   static std::string ignoreString;
+  static std::string EqualsSign;
 
   static const unsigned int OBJECT  = 1;
   static const unsigned int LEAF    = 2;

@@ -229,7 +229,7 @@ std::ostream& operator<< (std::ostream& os, const Object& obj) {
     os << "  ";
   }
   if (obj.leaf) {
-    os << obj.key << " = " << obj.strVal;
+    os << obj.key << Parser::EqualsSign << obj.strVal;
     if (obj.comment.size()) os << " # " << obj.comment;
     os << "\n";
     return os;
@@ -252,7 +252,7 @@ std::ostream& operator<< (std::ostream& os, const Object& obj) {
   }
 
   if (obj.isObjList) {
-    os << obj.key << " = { ";
+    os << obj.key << Parser::EqualsSign << "{ ";
     if (0 < obj.numTokens()) {
       os << obj.strVal << " }";
       if (obj.comment.size()) os << " # " << obj.comment;
@@ -276,7 +276,7 @@ std::ostream& operator<< (std::ostream& os, const Object& obj) {
   }
 
   if (&obj != Parser::topLevel) {
-    os << obj.key << " = { \n";
+    os << obj.key << Parser::EqualsSign << "{ \n";
     indent++;
   }
   for (std::vector<Object*>::const_iterator i = obj.objects.begin(); i != obj.objects.end(); ++i) {
