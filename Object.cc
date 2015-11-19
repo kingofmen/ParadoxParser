@@ -59,13 +59,13 @@ void Object::unsetValue (std::string val) {
 }
 
 void Object::unsetKeyValue (std::string key, std::string val) {
+  objvec copy;
   for (unsigned int i = 0; i < objects.size(); ++i) {
-    if (objects[i]->getKey() != key) continue;
-    if (objects[i]->getLeaf() != val) continue;
-    objects[i] = objects.back();
-    objects.pop_back();
-    --i;
+    if ((objects[i]->getKey() == key) &&
+	(objects[i]->getLeaf() == val)) continue;
+    copy.push_back(objects[i]);
   }
+  objects = copy;
 }
 
 void Object::setLeaf (std::string key, std::string val) {
