@@ -10,6 +10,7 @@ const std::string Parser::UnkeyedObjectMarker = "u_n_k_e_y_e_d_o_b_j_e_c_t";
 bool Parser::abortOnBadObject = false;
 std::string Parser::ignoreString("");
 std::string Parser::EqualsSign(" = ");
+std::map<std::string, std::string> Parser::specialCases;
 
 void setOutputStream (std::ostream* newos) {Parser::outstream = newos;}
 
@@ -80,6 +81,15 @@ void readFile (std::ifstream& read) {
     std::string buffer;
     std::getline(read, buffer);
     count++;
+    for (std::map<std::string, std::string>::iterator replace =
+             Parser::specialCases.begin();
+         replace != Parser::specialCases.end(); ++replace) {
+      std::string::size_type pos;
+      while ((pos = buffer.find(replace->first)) != std::string::npos) {
+        buffer.replace(pos, replace->first.size(), replace->second);
+      }
+    }
+
     int currBraces = trim(buffer);
     if ((Parser::ignoreString != "") && (Parser::ignoreString == buffer)) continue;
     openBraces += currBraces;

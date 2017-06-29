@@ -1,7 +1,7 @@
 OutPutOpt     = -o 
 
 CXX           = g++
-CXXFLAGS      = -Wall 
+CXXFLAGS      = -Wall -Wno-unused-local-typedefs
 LD            = g++
 LDFLAGS       = -O #-pg 
 
