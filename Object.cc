@@ -178,21 +178,21 @@ std::vector<Object*> Object::getValue (std::string key) const {
   return ret;
 }
 
-std::string Object::getToken (int index) {
+std::string Object::getToken (int index) const {
   if (!isObjList) return "";
   if (index >= (int) tokens.size()) return "";
   if (index < 0) return "";
   return tokens[index];
 }
 
-int Object::tokenAsInt (int index) {
+int Object::tokenAsInt (int index) const {
   if (!isObjList) return 0;
   if (index >= (int) tokens.size()) return 0;
   if (index < 0) return 0;
   return atoi(tokens[index].c_str());
 }
 
-double Object::tokenAsFloat (int index) {
+double Object::tokenAsFloat (int index) const {
   if (!isObjList) return 0;
   if (index >= (int) tokens.size()) return 0;
   if (index < 0) return 0;
@@ -204,9 +204,9 @@ int Object::numTokens () const {
   return tokens.size();
 }
 
-std::vector<std::string> Object::getKeys () {
+std::vector<std::string> Object::getKeys () const {
   std::vector<std::string> ret;
-  for (std::vector<Object*>::iterator i = objects.begin(); i != objects.end(); ++i) {
+  for (std::vector<Object*>::const_iterator i = objects.begin(); i != objects.end(); ++i) {
     std::string curr = (*i)->getKey();
     if (std::find(ret.begin(), ret.end(), curr) != ret.end()) continue;
     ret.push_back(curr);
@@ -294,7 +294,7 @@ std::ostream& operator<< (std::ostream& os, const Object& obj) {
   return os;
 }
 
-void Object::keyCount () {
+void Object::keyCount () const {
   if (leaf) {
     (*Parser::outstream) << key << " : 1\n";
     return;
@@ -324,8 +324,8 @@ void Object::keyCount () {
 
 }
 
-void Object::keyCount (std::map<std::string, int>& counter) {
-  for (std::vector<Object*>::iterator i = objects.begin(); i != objects.end(); ++i) {
+void Object::keyCount (std::map<std::string, int>& counter) const {
+  for (std::vector<Object*>::const_iterator i = objects.begin(); i != objects.end(); ++i) {
     counter[(*i)->key]++;
     if ((*i)->leaf) continue;
     (*i)->keyCount(counter);
@@ -411,25 +411,25 @@ Object* processFile (const char* filename, bool includes) {
   return ret;
 }
 
-double Object::safeGetFloat(std::string k, double def) {
+double Object::safeGetFloat(std::string k, double def) const {
   objvec vec = getValue(k);
   if (0 == vec.size()) return def;
   return atof(vec[0]->getLeaf().c_str());
 }
 
-std::string Object::safeGetString(std::string k, std::string def) {
+std::string Object::safeGetString(std::string k, std::string def) const {
   objvec vec = getValue(k);
   if (0 == vec.size()) return def;
   return vec[0]->getLeaf();
 }
 
-int Object::safeGetInt(std::string k, int def) {
+int Object::safeGetInt(std::string k, int def) const {
   objvec vec = getValue(k);
   if (0 == vec.size()) return def;
   return atoi(vec[0]->getLeaf().c_str());
 }
 
-unsigned int Object::safeGetUint(std::string k, unsigned int def) {
+unsigned int Object::safeGetUint(std::string k, unsigned int def) const {
   objvec vec = getValue(k);
   if (0 == vec.size()) return def;
   int ret = atoi(vec[0]->getLeaf().c_str());
@@ -437,7 +437,7 @@ unsigned int Object::safeGetUint(std::string k, unsigned int def) {
   return (unsigned int) ret;
 }
 
-Object* Object::safeGetObject(std::string k, Object* def) {
+Object* Object::safeGetObject(std::string k, Object* def) const {
   objvec vec = getValue(k);
   if (0 == vec.size()) return def;
   return vec[0];

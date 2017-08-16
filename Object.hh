@@ -20,13 +20,13 @@ public:
   void setValue (Object* val, Object* beforeThis = 0);
   void setValue (std::string val);
   void setValue (std::vector<Object*> val);
-  std::string getKey () {return key;}
+  std::string getKey () const {return key;}
   void setKey (std::string k) {key = k;} 
-  std::vector<std::string> getKeys (); 
+  std::vector<std::string> getKeys () const;
   std::vector<Object*> getValue (std::string key) const;
   std::string getLeaf () const {return strVal;}
   std::string getLeaf (std::string leaf) const;
-  std::vector<Object*> getLeaves () {return objects;}
+  std::vector<Object*> getLeaves () const {return objects;}
   void removeObject (Object* target); 
   void setLeaf (std::string k, std::string value);
   void setLeaf (std::string k, int value);
@@ -38,25 +38,25 @@ public:
   void resetLeaf (std::string k, double value);
   void unsetValue (std::string val);
   void unsetKeyValue (std::string key, std::string value); 
-  void keyCount ();
-  void keyCount (std::map<std::string, int>& counter);
+  void keyCount () const;
+  void keyCount (std::map<std::string, int>& counter) const;
   void setObjList (bool l = true) {isObjList = l;}
-  std::string getToken (int index);
-  int tokenAsInt (int index);
-  double tokenAsFloat (int index);
+  std::string getToken (int index) const;
+  int tokenAsInt (int index) const;
+  double tokenAsFloat (int index) const;
   void remToken (std::string val); 
   void resetToken (unsigned int idx, std::string val);
-  int numTokens () const; 
+  int numTokens () const;
   void addToList (std::string val);
   void addToList (double val);
   void addToList (int val);   
   void printTopLevel ();
   inline bool isLeaf () {return leaf;}
-  double safeGetFloat (std::string k, double def = 0);
-  std::string safeGetString (std::string k, std::string def = ""); 
-  int safeGetInt (std::string k, int def = 0);
-  unsigned int safeGetUint (std::string k, unsigned int def = 0); 
-  Object* safeGetObject (std::string k, Object* def = 0);
+  double safeGetFloat (std::string k, double def = 0) const;
+  std::string safeGetString (std::string k, std::string def = "") const;
+  int safeGetInt (std::string k, int def = 0) const;
+  unsigned int safeGetUint (std::string k, unsigned int def = 0) const;
+  Object* safeGetObject (std::string k, Object* def = 0) const;
   Object* getNeededObject (std::string k); // Returns the object with key 'k', creating and adding it if necessary. 
   std::string toString () const; 
   void setComment (std::string c) {comment = c;} 
