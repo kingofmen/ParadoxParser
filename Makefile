@@ -1,14 +1,15 @@
 OutPutOpt     = -o 
 
 CXX           = g++
-CXXFLAGS      = -Wall -Wno-unused-local-typedefs
+CXXFLAGS      = -Wall -Wno-unused-local-typedefs -Wno-deprecated-declarations
 LD            = g++
 LDFLAGS       = -O #-pg 
 
 CXXFLAGS     += -g #-pg 
-LIBS          = 
+LIBS          = -LC:\Users\Rolf\Desktop\boost_1_60_0\bin.v2\libs\system\build\gcc-mingw-6.3.0\release\link-static\threading-multi -lboost_system-mgw63-mt-1_60
+
 GL_LIBS       = 
-INCLUDES      = -I"C:\Users\Rolf\Desktop\boost_1_41_0"
+INCLUDES      = -I"C:\Users\Rolf\Desktop\boost_1_60_0"
 
 OBJECTS       = Parser.o Object.o DateParser.o Tester.o 
 
