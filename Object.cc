@@ -3,6 +3,7 @@
 #include <sstream>
 
 bool Object::debug = false;
+const std::string kIndent = "\t";
 
 Object::Object (std::string k) :
   objects(),
@@ -223,11 +224,23 @@ std::string Object::getLeaf (std::string leaf) const {
   return leaves[0]->getLeaf();
 }
 
-std::ostream& operator<< (std::ostream& os, const Object& obj) {
-  static int indent = 0;
-  for (int i = 0; i < indent; i++) {
-    os << "  ";
+double Object::getLeafAsFloat () const {
+  return atof(strVal.c_str());
+}
+
+int Object::getLeafAsInt () const {
+  return atoi(strVal.c_str());
+}
+
+void indent(std::ostream &os, int indentLevel) {
+  for (int i = 0; i < indentLevel; i++) {
+    os << kIndent;
   }
+}
+
+std::ostream& operator<< (std::ostream& os, const Object& obj) {
+  static int indentLevel = 0;
+  indent(os, indentLevel);
   if (obj.leaf) {
     os << obj.key << Parser::EqualsSign << obj.strVal;
     if (obj.comment.size()) os << " # " << obj.comment;
@@ -237,14 +250,12 @@ std::ostream& operator<< (std::ostream& os, const Object& obj) {
 
   if (obj.key == Parser::UnkeyedObjectMarker) {
     os << "{\n";
-    indent++;
+    indentLevel++;
     for (std::vector<Object*>::const_iterator i = obj.objects.begin(); i != obj.objects.end(); ++i) {
       os << *(*i);
     }
-    indent--;
-    for (int i = 0; i < indent; i++) {
-      os << "  ";
-    }
+    indentLevel--;
+    indent(os, indentLevel);
     os << "}";
     if (obj.comment.size()) os << " # " << obj.comment;
     os << "\n";
@@ -252,41 +263,50 @@ std::ostream& operator<< (std::ostream& os, const Object& obj) {
   }
 
   if (obj.isObjList) {
-    os << obj.key << Parser::EqualsSign << "{ ";
+    os << obj.key << Parser::EqualsSign << "{";
+    ++indentLevel;
     if (0 < obj.numTokens()) {
-      os << obj.strVal << " }";
-      if (obj.comment.size()) os << " # " << obj.comment;
-      os << "\n";
+      if (obj.tokens[0][0] == '"') {
+        for (auto& token : obj.tokens) {
+          os << "\n";
+          indent(os, indentLevel);
+          os << token;
+        }
+      } else {
+        os << "\n";
+        indent(os, indentLevel);
+        for (auto& token : obj.tokens) {
+          os << token << " ";
+        }
+      }
+      //os << obj.strVal << " }";
+      //if (obj.comment.size()) os << " # " << obj.comment;
+      //os << "\n";
     }
     else {
       os << "\n";
-      indent++;
       for (std::vector<Object*>::const_iterator i = obj.objects.begin(); i != obj.objects.end(); ++i) {
 	os << *(*i);
       }
-      indent--;
-      for (int i = 0; i < indent; i++) {
-	os << "  ";
-      }
-      os << "}";
-      if (obj.comment.size()) os << " # " << obj.comment;
-      os << "\n";
     }
+    os << "\n";
+    indent(os, --indentLevel);
+    os << "}";
+    if (!obj.comment.empty()) os << " # " << obj.comment;
+    os << "\n";
     return os;
   }
 
   if (&obj != Parser::topLevel) {
-    os << obj.key << Parser::EqualsSign << "{ \n";
-    indent++;
+    os << obj.key << Parser::EqualsSign << "{\n";
+    indentLevel++;
   }
   for (std::vector<Object*>::const_iterator i = obj.objects.begin(); i != obj.objects.end(); ++i) {
     os << *(*i);
   }
   if (&obj != Parser::topLevel) {
-    indent--;
-    for (int i = 0; i < indent; i++) {
-      os << "  ";
-    }
+    indentLevel--;
+    indent(os, indentLevel);
     os << "}";
     if (obj.comment.size()) os << " # " << obj.comment;
     os << "\n";

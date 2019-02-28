@@ -25,6 +25,8 @@ public:
   std::vector<std::string> getKeys () const;
   std::vector<Object*> getValue (std::string key) const;
   std::string getLeaf () const {return strVal;}
+  double getLeafAsFloat() const;
+  int getLeafAsInt() const;
   std::string getLeaf (std::string leaf) const;
   std::vector<Object*> getLeaves () const {return objects;}
   void removeObject (Object* target); 
@@ -51,7 +53,7 @@ public:
   void addToList (double val);
   void addToList (int val);   
   void printTopLevel ();
-  inline bool isLeaf () {return leaf;}
+  inline bool isLeaf () const {return leaf;}
   double safeGetFloat (std::string k, double def = 0) const;
   std::string safeGetString (std::string k, std::string def = "") const;
   int safeGetInt (std::string k, int def = 0) const;

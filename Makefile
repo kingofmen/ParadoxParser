@@ -11,7 +11,7 @@ LIBS          = -LC:\Users\Rolf\Desktop\boost_1_60_0\bin.v2\libs\system\build\gc
 GL_LIBS       = 
 INCLUDES      = -I"C:\Users\Rolf\Desktop\boost_1_60_0"
 
-OBJECTS       = Parser.o Object.o DateParser.o Tester.o 
+OBJECTS       = Parser.o Object.o DateParser.o
 
 #------------------------------------------------------------------------------
 # Clean suffixes so I can overwrite default cc -> o rule. 
@@ -26,7 +26,15 @@ all:	parser
 parser:		$(OBJECTS)
 		ar rcs libParser.lib $(OBJECTS) 
 
-tester:		$(OBJECTS)
+tester:		Tester.o $(OBJECTS)
+		$(LD) $(CXXFLAGS) $(GL_LIBS) $(LDFLAGS) $^ $(LIBS) $(OutPutOpt) $@
+		@echo "$@ done"
+
+offlimits:	offlimits.o $(OBJECTS)
+		$(LD) $(CXXFLAGS) $(GL_LIBS) $(LDFLAGS) $^ $(LIBS) $(OutPutOpt) $@
+		@echo "$@ done"
+
+piracy:		piracy.o $(OBJECTS)
 		$(LD) $(CXXFLAGS) $(GL_LIBS) $(LDFLAGS) $^ $(LIBS) $(OutPutOpt) $@
 		@echo "$@ done"
 

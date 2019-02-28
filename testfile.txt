@@ -11,6 +11,10 @@ test1 =
 
 hashtag_in_string = "This string contains a #, parse at your own risk" # And an extra comment!
 
+# Stupid special case in EU4 savegames.
+map_area_data{
+}
+
 test6 = {
    321 321 123
 }
