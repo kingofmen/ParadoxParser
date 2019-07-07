@@ -432,35 +432,38 @@ Object* processFile (const char* filename, bool includes) {
 }
 
 double Object::safeGetFloat(std::string k, double def) const {
-  objvec vec = getValue(k);
-  if (0 == vec.size()) return def;
-  return atof(vec[0]->getLeaf().c_str());
+  auto* obj = safeGetObject(k);
+  if (!obj) return def;
+  return atof(obj->getLeaf().c_str());
 }
 
 std::string Object::safeGetString(std::string k, std::string def) const {
-  objvec vec = getValue(k);
-  if (0 == vec.size()) return def;
-  return vec[0]->getLeaf();
+  auto* obj = safeGetObject(k);
+  if (!obj) return def;
+  return obj->getLeaf();
 }
 
 int Object::safeGetInt(std::string k, int def) const {
-  objvec vec = getValue(k);
-  if (0 == vec.size()) return def;
-  return atoi(vec[0]->getLeaf().c_str());
+  auto* obj = safeGetObject(k);
+  if (!obj) return def;
+  return atoi(obj->getLeaf().c_str());
 }
 
 unsigned int Object::safeGetUint(std::string k, unsigned int def) const {
-  objvec vec = getValue(k);
-  if (0 == vec.size()) return def;
-  int ret = atoi(vec[0]->getLeaf().c_str());
+  auto* obj = safeGetObject(k);
+  if (!obj) return def;
+  int ret = atoi(obj->getLeaf().c_str());
   assert(0 <= ret);
   return (unsigned int) ret;
 }
 
 Object* Object::safeGetObject(std::string k, Object* def) const {
-  objvec vec = getValue(k);
-  if (0 == vec.size()) return def;
-  return vec[0];
+  for (auto* obj : objects) {
+    if (obj->getKey() == k) {
+      return obj;
+    }
+  }
+  return def;
 }
 
 Object* Object::getNeededObject (std::string k) {
