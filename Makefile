@@ -3,9 +3,9 @@ OutPutOpt     = -o
 CXX           = g++
 CXXFLAGS      = -Wall -Wno-unused-local-typedefs -Wno-deprecated-declarations
 LD            = g++
-LDFLAGS       = -O #-pg 
+LDFLAGS       = -O2 #-pg 
 
-CXXFLAGS     += -g #-pg 
+CXXFLAGS     += -O2 #-g #-pg 
 LIBS          = -LC:\Users\Rolf\Desktop\boost_1_60_0\bin.v2\libs\system\build\gcc-mingw-6.3.0\release\link-static\threading-multi -lboost_system-mgw63-mt-1_60
 
 GL_LIBS       = 
