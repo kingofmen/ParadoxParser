@@ -48,6 +48,8 @@ testObjList = {
   }
 }
 
+escapedQuotes = "This sentence tests \"escaped quotes\"."
+
 testMixedObjList = {
   last_income=76.29395
   {

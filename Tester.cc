@@ -5,6 +5,7 @@
 int main (int argc, char** argv) {
   if (1 == argc) {
     Parser::specialCases["map_area_data{"] = "map_area_data={";
+    Parser::specialCases["\\\""] = "'";
     Object* testObject = processFile("testfile.txt");
     std::cout << (*testObject) << std::endl;
   }
