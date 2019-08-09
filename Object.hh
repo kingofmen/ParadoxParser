@@ -15,6 +15,7 @@ public:
   Object (Object* other);
 
   static bool debug;
+  static int numObjects;
   
   void clear () {objects.clear(); tokens.clear(); strVal.clear();} 
   void setValue (Object* val, Object* beforeThis = 0);
@@ -61,7 +62,8 @@ public:
   Object* safeGetObject (std::string k, Object* def = 0) const;
   Object* getNeededObject (std::string k); // Returns the object with key 'k', creating and adding it if necessary. 
   std::string toString () const; 
-  void setComment (std::string c) {comment = c;} 
+  void setComment (std::string c);
+  std::string getComment () const;
   bool isNumeric () const;
   
 private:
@@ -72,7 +74,7 @@ private:
   bool isObjList;
   std::vector<std::string> tokens; // For use in lists.
 
-  std::string comment; 
+  static std::map<const Object*, std::string> commentMap;
 };
 
 extern std::ostream& operator<< (std::ostream& os, const Object& i);

@@ -11,8 +11,9 @@ int main (int argc, char** argv) {
   }
   else {    
     Object* testObject = processFile(argv[1]); 
-    assert(testObject); 
-    std::cout << "Successfully parsed" << std::endl;
+    assert(testObject);
+    std::cout << "Successfully parsed " << Object::numObjects << " objects."
+              << std::endl;
     std::cout << (*testObject) << std::endl; 
   }
   return 0; 

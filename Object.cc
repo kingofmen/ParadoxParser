@@ -4,6 +4,8 @@
 
 bool Object::debug = false;
 const std::string kIndent = "\t";
+int Object::numObjects = 0;
+std::map<const Object*, std::string> Object::commentMap;
 
 Object::Object (std::string k) :
   objects(),
@@ -12,9 +14,11 @@ Object::Object (std::string k) :
   isObjList(false)
 {
   key = k;
+  numObjects++;
 }
 
 Object::~Object () {
+  numObjects--;
   for (objiter i = objects.begin(); i != objects.end(); ++i) {
     delete (*i);
   }
@@ -27,6 +31,7 @@ Object::Object (Object* other) :
   leaf(other->leaf),
   isObjList(other->isObjList)
 {
+  numObjects++;
   key = other->key;
   for (std::vector<Object*>::iterator i = other->objects.begin(); i != other->objects.end(); ++i) {
     objects.push_back(new Object(*i));
@@ -238,12 +243,20 @@ void indent(std::ostream &os, int indentLevel) {
   }
 }
 
+std::string Object::getComment() const {
+  if (commentMap.find(this) != Object::commentMap.end()) {
+    return commentMap.at(this);
+  }
+  return "";
+}
+
 std::ostream& operator<< (std::ostream& os, const Object& obj) {
   static int indentLevel = 0;
   indent(os, indentLevel);
+  std::string comment = obj.getComment();
   if (obj.leaf) {
     os << obj.key << Parser::EqualsSign << obj.strVal;
-    if (obj.comment.size()) os << " # " << obj.comment;
+    if (comment.size()) os << " # " << comment;
     os << "\n";
     return os;
   }
@@ -257,7 +270,7 @@ std::ostream& operator<< (std::ostream& os, const Object& obj) {
     indentLevel--;
     indent(os, indentLevel);
     os << "}";
-    if (obj.comment.size()) os << " # " << obj.comment;
+    if (comment.size()) os << " # " << comment;
     os << "\n";
     return os;
   }
@@ -280,7 +293,7 @@ std::ostream& operator<< (std::ostream& os, const Object& obj) {
         }
       }
       //os << obj.strVal << " }";
-      //if (obj.comment.size()) os << " # " << obj.comment;
+      //if (comment.size()) os << " # " << comment;
       //os << "\n";
     }
     else {
@@ -292,7 +305,7 @@ std::ostream& operator<< (std::ostream& os, const Object& obj) {
     os << "\n";
     indent(os, --indentLevel);
     os << "}";
-    if (!obj.comment.empty()) os << " # " << obj.comment;
+    if (!comment.empty()) os << " # " << comment;
     os << "\n";
     return os;
   }
@@ -308,7 +321,7 @@ std::ostream& operator<< (std::ostream& os, const Object& obj) {
     indentLevel--;
     indent(os, indentLevel);
     os << "}";
-    if (obj.comment.size()) os << " # " << obj.comment;
+    if (comment.size()) os << " # " << comment;
     os << "\n";
   }
   return os;
@@ -490,4 +503,8 @@ bool Object::isNumeric () const {
     if (!isdigit(*i)) return false;
   }
   return true;
+}
+
+void Object::setComment(std::string c) {
+  commentMap[this] = c;
 }
